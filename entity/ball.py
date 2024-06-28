@@ -4,8 +4,8 @@ from entity.entity import Entity
 
 
 class Ball(Entity):
-    def __init__(self, x, y, radius, mass, color):
-        super().__init__(x, y, radius * 2, radius * 2, mass, color)
+    def __init__(self, x, y, radius, mass, color, freeze=False):
+        super().__init__(x, y, radius * 2, radius * 2, mass, color, freeze=False)
         self.radius = radius
 
     def render(self, screen):

@@ -3,21 +3,24 @@ from math import atan2, sin, cos, pi
 
 from pygame import Vector2
 
+from entity.entity import Entity
+
 
 class Gravitation(Model):
-    def __init__(self, G):
+    def __init__(self, G, r_power = 2):
         super().__init__()
         self.G = G
+        self.r_power = r_power
 
     def simulate(self, entities):
         for i in range(len(entities)):
             for j in range(len(entities)):
                 if i == j:
                     continue
-                a = entities[i]
-                b = entities[j]
+                a: Entity = entities[i]
+                b: Entity = entities[j]
 
-                r2 = a.position[0]**2 + b.position[0]**2
+                r2 = a.position.distance_to(b.position) ** self.r_power
 
                 F = self.G * a.mass * b.mass / r2
 

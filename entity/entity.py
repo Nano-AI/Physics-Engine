@@ -3,7 +3,7 @@ import pygame
 
 
 class Entity:
-    def __init__(self, x, y, width, height, mass, color, effects=None):
+    def __init__(self, x, y, width, height, mass, color, freeze=False, effects=None):
         self.position = Vector2(x, y)
         self.velocity = Vector2(0, 0)
         self.acceleration = Vector2(0, 0)
@@ -18,13 +18,20 @@ class Entity:
 
         r, g, b, _ = color
         self.color = pygame.Color(r, g, b)
+        self.freeze = freeze
 
     def update(self, deltaT):
+        if self.freeze:
+            self.acceleration = 0
+            self.velocity = 2
+            self.forces.clear()
+            return
+
         self.acceleration = Vector2(0, 0)
         for force in self.forces:
             # print(type(force), type(force / self.mass * deltaT), type(self.acceleration))
             # print(force)
-            self.acceleration += force / self.mass * deltaT
+            self.acceleration += force / self.mass
 
         self.forces.clear()
 
